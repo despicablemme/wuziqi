@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.gyh.wuziqi.R
 
 import com.gyh.wuziqi.databinding.CheeseBoardItemViewBinding
+import com.gyh.wuziqi.ui.listener.ChessBoardClickListener
 
 class CheeseBoardAdapter(boardItemCount : Int) : Adapter<CheeseBoardAdapter.CheeseBoardItemHolder>() {
 
-    private val count = boardItemCount
     private val ITEM_TYPE_INNER = 0
     private val ITEM_TYPE_BORDER_TOP = 1
     private val ITEM_TYPE_BORDER_BOTTOM = 2
@@ -26,6 +26,10 @@ class CheeseBoardAdapter(boardItemCount : Int) : Adapter<CheeseBoardAdapter.Chee
     private val ITEM_TYPE_CORNER_SE = 14
 
     private val CHEESE_SIZE = 20
+
+    private val count = boardItemCount
+
+    lateinit var mListener : ChessBoardClickListener
 
     class CheeseBoardItemHolder(itemView: View) : ViewHolder(itemView) {
 
@@ -82,6 +86,10 @@ class CheeseBoardAdapter(boardItemCount : Int) : Adapter<CheeseBoardAdapter.Chee
 
         }
 
+        binding.root.setOnClickListener {
+            mListener.onChessBoardItemClick(it)
+        }
+
         return CheeseBoardItemHolder(binding.root)
     }
 
@@ -91,5 +99,9 @@ class CheeseBoardAdapter(boardItemCount : Int) : Adapter<CheeseBoardAdapter.Chee
 
     override fun onBindViewHolder(holder: CheeseBoardItemHolder, position: Int) {
 
+    }
+
+    fun setOnItemClickListener(listener: ChessBoardClickListener) {
+        mListener = listener
     }
 }
